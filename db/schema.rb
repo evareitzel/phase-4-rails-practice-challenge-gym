@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_03_27_172029) do
+ActiveRecord::Schema.define(version: 2023_04_03_034736) do
 
   create_table "clients", force: :cascade do |t|
     t.string "name"
@@ -27,11 +27,15 @@ ActiveRecord::Schema.define(version: 2023_03_27_172029) do
   end
 
   create_table "memberships", force: :cascade do |t|
-    t.integer "gym_id"
-    t.integer "client_id"
+    t.integer "client_id", null: false
+    t.integer "gym_id", null: false
     t.integer "charge"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["client_id"], name: "index_memberships_on_client_id"
+    t.index ["gym_id"], name: "index_memberships_on_gym_id"
   end
 
+  add_foreign_key "memberships", "clients"
+  add_foreign_key "memberships", "gyms"
 end
